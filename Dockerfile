@@ -11,9 +11,7 @@ RUN apk update && apk add bash curl \
 
 WORKDIR /opt
 RUN curl https://archive.apache.org/dist/kafka/${KAFKA_VERSION}/kafka_2.11-${KAFKA_VERSION}.tgz | tar xz
-RUN mkdir ${DATA_SOURCES_DIR} ${WORKERS_DIR}
-ADD ${DATA_SOURCES_DIR} ./${DATA_SOURCES_DIR}
-ADD connect-standalone.docker.properties common-worker.properties WorkerPropertiesGenerator.java ./
+ADD . .
 RUN javac WorkerPropertiesGenerator.java
 
 CMD /bin/sh -c "java WorkerPropertiesGenerator && \

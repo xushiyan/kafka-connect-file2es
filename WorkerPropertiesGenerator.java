@@ -1,24 +1,24 @@
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.*;
 import java.util.Properties;
 
 public class WorkerPropertiesGenerator {
+
+    public static final String COMMON_WORKER_PROPS = "common-worker.properties";
 
     public static void generate(Path dataSourceFilePath, Path workerPropsDirPath) {
 
         // data source file name w/o extension is used as topic
         String fname = dataSourceFilePath.getFileName().toString();
         String workerTopic = fname.indexOf(".") > 0 ? fname.substring(0, fname.lastIndexOf(".")) : fname;
-
-        try (FileOutputStream fos = new FileOutputStream(
-                Paths.get(workerPropsDirPath.toString(), String.format("%s.properties", workerTopic)).toFile());) {
+        Path commonPropsPath = Paths.get(workerPropsDirPath.toString(), COMMON_WORKER_PROPS);
+        try (FileInputStream fis = new FileInputStream(commonPropsPath.toFile());
+                FileOutputStream fos = new FileOutputStream(Paths
+                        .get(workerPropsDirPath.toString(), String.format("%s.properties", workerTopic)).toFile());) {
 
             // create new properties file for each worker based on common properties
             Properties props = new Properties();
-            ClassLoader cl = WorkerPropertiesGenerator.class.getClassLoader();
-            props.load(cl.getResourceAsStream("common-worker.properties"));
+            props.load(fis);
             props.setProperty("name", workerTopic);
             props.setProperty("topic", workerTopic);
             props.setProperty("file", dataSourceFilePath.toString());
@@ -26,6 +26,11 @@ public class WorkerPropertiesGenerator {
         } catch (IOException e) {
             System.err.println(e);
         }
+    }
+
+    public static void deleteCommonProps(Path workerPropsDirPath) throws IOException {
+        Path commonPropsPath = Paths.get(workerPropsDirPath.toString(), COMMON_WORKER_PROPS);
+        Files.deleteIfExists(commonPropsPath);
     }
 
     public static void main(String[] args) throws IOException {
@@ -37,5 +42,6 @@ public class WorkerPropertiesGenerator {
         Files.walk(dataSourcesDir).filter(Files::isRegularFile).forEach(p -> {
             WorkerPropertiesGenerator.generate(p, workerPropsDir);
         });
+        WorkerPropertiesGenerator.deleteCommonProps(workerPropsDir);
     }
 }
