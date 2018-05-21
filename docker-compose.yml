@@ -26,6 +26,14 @@ services:
       - "./data-sources:/opt/data-sources"
     depends_on:
       - kafka-cluster
+  connect-ui:
+    image: landoop/kafka-connect-ui:latest
+    environment:
+      CONNECT_URL: "connect:8086"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - connect
   elasticsearch:
     image: itzg/elasticsearch:2.4.3
     environment:
