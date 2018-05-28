@@ -1,0 +1,13 @@
+{
+    "name": "topic1-file-source",
+    "config": {
+        "connector.class": "org.apache.kafka.connect.file.FileStreamSourceConnector",
+        "tasks.max": "1",
+        "topic": "topic1",
+        "file": "/tmp/docker-connect/topic1.txt",
+        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "key.converter.schemas.enable": false,
+        "value.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "value.converter.schemas.enable": false
+    }
+}
