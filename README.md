@@ -12,11 +12,10 @@
 docker-compose up -d
 ```
 
-Then visit
+After services fully start, visit
 
 - [Kafka topics UI](http://localhost:8000)
 - [Kafka Connect UI](http://localhost:8001)
-- [ElasticSearch UI](http://localhost:1358)
 
 ### Create Connectors
 
@@ -44,6 +43,14 @@ curl -X POST http://localhost:8083/connectors \
     -H 'Accept:application/json' \
     -d @connectors/elasticsearchsink.json
 ```
+
+### View Data in ElasticSearch
+
+- Open [ElasticSearch UI](http://localhost:1358)
+- Configure [ElasticSearch host](http://localhost:9200) and index (e.g., `topic1`) to view data
+- Sample data should have been populated in the UI
+
+![esdata](./docs/esdata.png)
 
 ## References
 
