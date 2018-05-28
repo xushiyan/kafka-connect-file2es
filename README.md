@@ -2,7 +2,7 @@
 
 ## Overview
 
-
+![overview](./docs/overview.png)
 
 ## Run the Pipeline
 
@@ -36,7 +36,7 @@ curl -X POST http://localhost:8083/connectors \
     -d @connectors/filesource-topic2.json
 ```
 
-- ElasticSearch sink connector
+- ElasticSearch sink connector 
 
 ```bash
 curl -X POST http://localhost:8083/connectors \
@@ -45,4 +45,4 @@ curl -X POST http://localhost:8083/connectors \
     -d @connectors/elasticsearchsink.json
 ```
 
-  See the [documentation](https://docs.confluent.io/current/connect/connect-elasticsearch/docs/configuration_options.html) for more configurations.
+- Check out [documentation](https://docs.confluent.io/current/connect/connect-elasticsearch/docs/configuration_options.html) for more configurations
