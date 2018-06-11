@@ -2,7 +2,7 @@
   "name": "elasticsearch-sink",
   "config": {
     "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
-    "tasks.max": "1",
+    "tasks.max": "2",
     "topics": "topic1,topic2",
     "key.ignore": true,
     "schema.ignore": true,
@@ -13,6 +13,14 @@
     "drop.invalid.message": false,
     "type.name": "somedoctype",
     "connection.url": "http://elasticsearch:9200",
-    "name": "elasticsearch-sink"
+    "name": "elasticsearch-sink",
+    "transforms": "ConvertTimestamp,RouteToIndex",
+    "transforms.ConvertTimestamp.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+    "transforms.ConvertTimestamp.target.type": "string",
+    "transforms.ConvertTimestamp.field": "timestamp",
+    "transforms.ConvertTimestamp.format": "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'",
+    "transforms.RouteToIndex.type": "org.apache.kafka.connect.transforms.TimestampRouter",
+    "transforms.RouteToIndex.timestamp.format": "yyyy.MM",
+    "transforms.RouteToIndex.topic.format": "${topic}-${timestamp}"
   }
 }

@@ -44,6 +44,15 @@ curl -X POST http://localhost:8083/connectors \
     -d @connectors/elasticsearchsink.json
 ```
 
+### Append data to file
+
+```text
+{"timestamp":1528591539001,"event":"login"}
+{"timestamp":1528592539001,"event":"logout"}
+{"timestamp":1528593539001,"event":"login"}
+{"timestamp":1528594539001,"event":"logout"}
+```
+
 ### View Data in ElasticSearch
 
 - Open [ElasticSearch UI](http://localhost:1358)
@@ -54,6 +63,7 @@ curl -X POST http://localhost:8083/connectors \
 
 ## References
 
+- [Apache Kafka Documentation - Connect](https://kafka.apache.org/documentation/#connect)
 - [Confluent Docker Configuration](https://docs.confluent.io/current/installation/docker/docs/configuration.html)
 - [Confluent Kafka Connect REST API](https://docs.confluent.io/current/connect/references/restapi.html)
 - [Confluent ElasticSearch Connector](https://docs.confluent.io/current/connect/connect-elasticsearch/docs/elasticsearch_connector.html)
