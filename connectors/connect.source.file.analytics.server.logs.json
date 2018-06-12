@@ -1,10 +1,10 @@
 {
-    "name": "topic1-file-source",
+    "name": "connect.source.file.analytics.server.logs",
     "config": {
         "connector.class": "org.apache.kafka.connect.file.FileStreamSourceConnector",
         "tasks.max": "1",
-        "topic": "topic1",
-        "file": "/tmp/docker-connect/topic1.txt",
+        "topic": "analytics.server.logs",
+        "file": "/tmp/docker-connect/analytics.server.logs.txt",
         "key.converter": "org.apache.kafka.connect.storage.StringConverter",
         "key.converter.schemas.enable": false,
         "value.converter": "org.apache.kafka.connect.storage.StringConverter",

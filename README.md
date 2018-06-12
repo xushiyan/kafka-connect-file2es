@@ -19,38 +19,38 @@ After services fully start, visit
 
 ### Create Connectors
 
-- File source connectors for `topic1` and `topic2`
-
 ```bash
+# file source connector for topic: analytics.server.logs
 curl -X POST http://localhost:8083/connectors \
     -H 'Content-Type:application/json' \
     -H 'Accept:application/json' \
-    -d @connectors/filesource-topic1.json
-```
+    -d @connectors/connect.source.file.analytics.server.logs.json
 
-```bash
+# file source connector for topic: analytics.user.events
 curl -X POST http://localhost:8083/connectors \
     -H 'Content-Type:application/json' \
     -H 'Accept:application/json' \
-    -d @connectors/filesource-topic2.json
-```
+    -d @connectors/connect.source.file.analytics.user.events.json
 
-- ElasticSearch sink connector
-
-```bash
+# elasticsearch sink connector for all topics
 curl -X POST http://localhost:8083/connectors \
     -H 'Content-Type:application/json' \
     -H 'Accept:application/json' \
-    -d @connectors/elasticsearchsink.json
+    -d @connectors/connect.sink.elasticsearch.json
 ```
 
-### Append data to file
+### Create Test Data
 
-```text
-{"timestamp":1528591539001,"event":"login"}
-{"timestamp":1528592539001,"event":"logout"}
-{"timestamp":1528593539001,"event":"login"}
-{"timestamp":1528594539001,"event":"logout"}
+```bash
+# messages for topic: analytics.server.logs
+echo '{"ts":1528697281001,"id":"ac1393","log":"Nam congue pretium ligula, ac susc ."}' >> data/analytics.server.logs.txt
+echo '{"ts":1528697281002,"id":"ac1393","log":"Quisque pretium justo massa, ac laet"}' >> data/analytics.server.logs.txt
+
+# messages for topic: analytics.user.events
+echo '{"ts":1528591539001,"id":"12bfc4","event":"login"}'  >> data/analytics.user.events.txt
+echo '{"ts":1528592539001,"id":"12bfc4","event":"logout"}' >> data/analytics.user.events.txt
+echo '{"ts":1528593539001,"id":"12bfc4","event":"login"}'  >> data/analytics.user.events.txt
+echo '{"ts":1528594539001,"id":"12bfc4","event":"logout"}' >> data/analytics.user.events.txt
 ```
 
 ### View Data in ElasticSearch

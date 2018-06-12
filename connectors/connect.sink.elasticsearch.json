@@ -1,0 +1,31 @@
+{
+  "name": "connect.sink.elasticsearch",
+  "config": {
+    "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
+    "tasks.max": "2",
+    "type.name": "analytics_entry",
+    "topics": "analytics.server.logs,analytics.user.events",
+    "key.ignore": true,
+    "schema.ignore": true,
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "key.converter.schemas.enable": false,
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": false,
+    "drop.invalid.message": false,
+    "behavior.on.null.values": "fail",
+    "behavior.on.malformed.documents": "fail",
+    "connection.url": "http://elasticsearch:9200",
+    "name": "connect.sink.elasticsearch",
+    "transforms": "ConvertTs,RouteToIndex,RouteToMonth",
+    "transforms.ConvertTs.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+    "transforms.ConvertTs.target.type": "string",
+    "transforms.ConvertTs.field": "ts",
+    "transforms.ConvertTs.format": "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'",
+    "transforms.RouteToIndex.type": "org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.RouteToIndex.regex": "analytics\\.(.*)",
+    "transforms.RouteToIndex.replacement": "$1",
+    "transforms.RouteToMonth.type": "org.apache.kafka.connect.transforms.TimestampRouter",
+    "transforms.RouteToMonth.timestamp.format": "yyyy.MM",
+    "transforms.RouteToMonth.topic.format": "${topic}-${timestamp}"
+  }
+}
