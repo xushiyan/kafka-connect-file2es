@@ -71,10 +71,11 @@ services:
       CONNECT_INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
       CONNECT_INTERNAL_VALUE_CONVERTER_SCHEMAS_ENABLE: "false"
       CONNECT_ZOOKEEPER_CONNECT: 'zookeeper:2181'
-      CONNECT_PLUGIN_PATH: /usr/share/java
+      CONNECT_PLUGIN_PATH: /usr/share/java,/tmp/connect-plugins
       CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
     volumes:
       - ./data:/tmp/docker-connect
+      - ./plugins:/tmp/connect-plugins
 
   kafka-rest-proxy:
     image: confluentinc/cp-kafka-rest:4.1.1

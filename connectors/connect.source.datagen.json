@@ -1,0 +1,18 @@
+{
+    "name": "connect.source.datagen",
+    "config": {
+        "connector.class": "com.github.xushiyan.kafka.connect.datagen.DatagenConnector",
+        "tasks.max": "1",
+        "topic": "generated.events",
+        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "key.converter.schemas.enable": false,
+        "value.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "value.converter.schemas.enable": false,
+        "test.mode": "performance",
+        "batch.size": 10,
+        "batch.interval": 5.0,
+        "message.template": "{\"status\":\"foo\"}",
+        "random.field": "status",
+        "random.field.values": "foo,bar,baz"
+    }
+}
