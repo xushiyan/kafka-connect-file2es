@@ -39,7 +39,9 @@ curl -X POST http://localhost:8083/connectors \
     -d @connectors/connect.sink.elasticsearch.json
 ```
 
-### Create Test Data
+## Generate Data
+
+### Write data to files
 
 ```bash
 # messages for topic: analytics.server.logs
@@ -56,10 +58,23 @@ echo '{"ts":1528594539001,"id":"12bfc4","event":"logout"}' >> data/analytics.use
 ### View Data in ElasticSearch
 
 - Open [ElasticSearch UI](http://localhost:1358)
-- Configure [ElasticSearch host](http://localhost:9200) and index (e.g., `topic1`) to view data
+- Configure [ElasticSearch host](http://localhost:9200) and index (e.g., `server.logs-2018-06`) to view data
 - Sample data should have been populated in the UI
 
-![esdata](./docs/esdata.png)
+### Create [kafka-connect-datagen](https://github.com/xushiyan/kafka-connect-datagen) task
+
+```bash
+# custom source connector that generates random data
+curl -X POST http://localhost:8083/connectors \
+    -H 'Content-Type:application/json' \
+    -H 'Accept:application/json' \
+    -d @connectors/connect.source.datagen.json
+```
+
+Based on the [configuration](./connectors/connect.source.datagen.json), the connector task generates 10 messages every 5 seconds and send those to topic `generated.events`.
+
+- To view the data, go to [Kafka topics UI](http://localhost:8000/#/cluster/default/topic/n/generated.events/).
+- To pause the data generation, go to [Kafka Connect UI](http://localhost:8001/#/cluster/kafka-connect-1/connector/connect.source.datagen) and click the pause button on top right corner.
 
 ## References
 
