@@ -3,7 +3,7 @@
     "config": {
         "connector.class": "com.github.xushiyan.kafka.connect.datagen.DatagenConnector",
         "tasks.max": "1",
-        "topic": "generated.events",
+        "topic.name": "generated.events",
         "key.converter": "org.apache.kafka.connect.storage.StringConverter",
         "key.converter.schemas.enable": false,
         "value.converter": "org.apache.kafka.connect.storage.StringConverter",
@@ -11,8 +11,7 @@
         "test.mode": "performance",
         "poll.size": 10,
         "poll.interval.ms": 5000,
-        "message.template": "{\"status\":\"foo\"}",
-        "random.field": "status",
-        "random.field.values": "foo,bar,baz"
+        "message.template": "{\"status\":\"foo\",\"direction\":\"up\"}",
+        "random.fields": "status:foo|bar|baz,direction:up|down|left|right"
     }
 }
